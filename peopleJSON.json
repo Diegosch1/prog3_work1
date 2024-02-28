@@ -1,0 +1,62 @@
+[
+    {
+        "docNum": "ABC123",
+        "names": "John",
+        "gender": "Male",
+        "city": {
+            "cityName": "New York",
+            "daneCode": 1
+        },
+        "docType": "Passport",
+        "lastNames": "Doe",
+        "birthDate": "1990-05-15"
+    },
+    {
+        "docNum": "DEF456",
+        "names": "Jane",
+        "gender": "Female",
+        "city": {
+            "cityName": "Los Angeles",
+            "daneCode": 2
+        },
+        "docType": "ID",
+        "lastNames": "Smith",
+        "birthDate": "1985-10-20"
+    },
+    {
+        "docNum": "GHI789",
+        "names": "Michael",
+        "gender": "Male",
+        "city": {
+            "cityName": "Chicago",
+            "daneCode": 3
+        },
+        "docType": "Driver's License",
+        "lastNames": "Johnson",
+        "birthDate": "1978-03-25"
+    },
+    {
+        "docNum": "JKL012",
+        "names": "Emily",
+        "gender": "Female",
+        "city": {
+            "cityName": "Houston",
+            "daneCode": 4
+        },
+        "docType": "Passport",
+        "lastNames": "Brown",
+        "birthDate": "1995-12-03"
+    },
+    {
+        "docNum": "MNO345",
+        "names": "David",
+        "gender": "Male",
+        "city": {
+            "cityName": "Miami",
+            "daneCode": 5
+        },
+        "docType": "ID",
+        "lastNames": "Martinez",
+        "birthDate": "1980-07-08"
+    }
+]
