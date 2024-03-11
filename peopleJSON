@@ -1,0 +1,21 @@
+[
+    {
+        "lastName": "APerez",
+        "gender": "Masculino",
+        "name": "ZJuanillo",
+        "birthDate": "2010-08-30"
+    },
+    {
+        "lastName": "BRodriguez",
+        "gender": "Masculino",
+        "name": "BPedro",
+        "birthDate": "2000-12-10"
+    },
+    {
+        "lastName": "CGonzalez",
+        "gender": "Femenino",
+        "name": "AMaria",
+        "birthDate": "1985-08-20"
+    }
+    
+]

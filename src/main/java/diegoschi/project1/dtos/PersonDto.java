@@ -1,0 +1,62 @@
+package diegoschi.project1.dtos;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
+import diegoschi.project1.model.Person;
+import diegoschi.project1.utils.DateUtil;
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+public class PersonDto {
+     private String name;
+    private String lastName;
+    private String gender;
+    private LocalDate birthDate;
+    private int age;
+
+
+    public static PersonDto fromPerson(Person person) {
+        PersonDto personDto = new PersonDto();
+        personDto.setName(person.getName());
+        personDto.setLastName(person.getLastName());
+        personDto.setGender(person.getGender());
+        personDto.setBirthDate(person.getBirthDate());
+        personDto.setAge(DateUtil.getAge(person.getBirthDate()));
+        return personDto;
+    }
+
+
+    public static List<PersonDto> fromPeople(List <Person> people) {
+        List <PersonDto> personDto = new ArrayList<PersonDto>();
+        for (Person person : people) {
+            personDto.add(PersonDto.fromPerson(person));
+        }
+        return personDto;
+    }
+
+    public static Person fromPersonDto(PersonDto personDto) {
+        Person person = new Person();
+        person.setName(personDto.getName());
+        person.setLastName(personDto.getLastName());
+        person.setGender(personDto.getGender());
+        person.setBirthDate(personDto.getBirthDate());
+        return person;
+    }
+
+    public static boolean validaPerson(PersonDto personDto) {
+        boolean valid = true; 
+        if (personDto.getName() == null || 
+        personDto.getLastName() == null || 
+        personDto.getGender() == null || 
+        personDto.getBirthDate() == null) {
+            valid =false;
+        }
+        return  valid;
+    }
+
+
+}

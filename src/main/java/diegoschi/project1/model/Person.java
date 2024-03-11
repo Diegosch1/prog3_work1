@@ -1,6 +1,5 @@
 package diegoschi.project1.model;
-
-import org.json.JSONObject;
+import java.time.LocalDate;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,15 +8,11 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 public class Person {
-    String docType;
-    String docNum;
-    String names;
-    String lastNames;
-    String gender;
-    String birthDate;
-    City city;
+    private String name;
+    private String lastName;
+    private String gender;
+    private LocalDate birthDate;
 }
-
