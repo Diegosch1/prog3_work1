@@ -11,5 +11,13 @@ import lombok.Setter;
 @NoArgsConstructor
 public class City {
     String cityName;
-    int daneCode;
+    String daneCode;
+
+    public static boolean isValidCity(City city){
+        if (city == null||city.getDaneCode() == null || city.getCityName()==null) {
+            return false;
+        } else {
+            return true;
+        }
+    }
 }
