@@ -9,7 +9,6 @@ import diegoschi.project1.model.Person;
 
 public class CityService {
     JSONController json = new JSONController();
-    private UptcList<Person> people = json.readPeopleFromJson("peopleJSON");
     private UptcList<City> cities = json.readCitiesFromJson("citiesJSON");
     PersonService pService = new PersonService();
 
