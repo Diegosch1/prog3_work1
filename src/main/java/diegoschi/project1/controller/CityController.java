@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import diegoschi.project1.exceptions.ProjectExeption;
 import diegoschi.project1.model.City;
 import diegoschi.project1.services.CityService;
 import diegoschi.project1.services.PersonService;
@@ -28,27 +29,25 @@ public class CityController {
         return citiesAux;
     }
 
-    
     @PostMapping("/addCity")
-    public ResponseEntity<?> addCity(@RequestBody City city) {
-        if (City.isValidCity(city)) {
-            cityService.addCity(city);            
+    public ResponseEntity<Object> addCity(@RequestBody City city) {
+        try {
+            City.isValidCity(city);
+            cityService.addCity(city);
             return ResponseEntity.status(HttpStatus.CREATED).build();
-        } else {
-            System.out.println("Bad Request");
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        } catch (ProjectExeption e) {
+            return ResponseEntity.status(e.getMenssage().getCodeHttp()).body(e.getMenssage());
         }
     }
 
     @DeleteMapping("/deleteCity/{daneCode}")
-    public ResponseEntity<?> deleteCity(@PathVariable String daneCode) {
-        if (!daneCode.equals(null)) {
+    public ResponseEntity<Object> deleteCity(@PathVariable String daneCode) {        
+        try {
             City targetCity = cityService.getCityByDaneCode(daneCode);
-            cityService.deleteCity(targetCity);            
+            cityService.deleteCity(targetCity);
             return ResponseEntity.status(HttpStatus.CREATED).build();
-        } else {
-            System.out.println("Bad Request");
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        } catch (ProjectExeption e) {
+            return ResponseEntity.status(e.getMenssage().getCodeHttp()).body(e.getMenssage());
         }
     }
 }

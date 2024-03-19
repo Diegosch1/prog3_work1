@@ -1,9 +1,10 @@
 package diegoschi.project1.controller;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
+import co.edu.uptc.controller.JMFileReader;
+import co.edu.uptc.controller.JMFileWriter;
 import co.edu.uptc.ejercicio1.models.UptcList;
+import co.edu.uptc.model.JMArray;
+import co.edu.uptc.model.JMObject;
 import diegoschi.project1.model.City;
 import diegoschi.project1.model.Person;
 
@@ -14,32 +15,30 @@ import java.time.LocalDate;
 
 public class JSONController {
     public void writePeopleToJson(UptcList<Person> people, String fileName) {
-        JSONArray jsonArray = new JSONArray();
+        JMArray<JMObject> jsonArray = new JMArray<>();
 
         for (Person person : people) {
-            JSONObject jsonPerson = new JSONObject();
-            JSONObject jsonCity = new JSONObject();
-            
+            JMObject jsonPerson = new JMObject();
+            JMObject jsonCity = new JMObject();
+
             jsonPerson.put("docType", person.getDocType());
-            jsonPerson.put("docNum", person.getDocNum());                
+            jsonPerson.put("docNum", person.getDocNum());
             jsonPerson.put("name", person.getName());
             jsonPerson.put("lastName", person.getLastName());
             jsonPerson.put("gender", person.getGender());
             jsonPerson.put("birthDate", person.getBirthDate().toString());
-            //jsonCity attibutes 
+            // jsonCity attibutes
             jsonCity.put("cityName", person.getCity().getCityName());
             jsonCity.put("daneCode", person.getCity().getDaneCode());
 
             jsonPerson.put("city", jsonCity);
-                   
-            jsonArray.put(jsonPerson);
+
+            jsonArray.add(jsonPerson);
         }
 
-        try {
-            Files.write(Paths.get(fileName), jsonArray.toString().getBytes());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        JMFileWriter writer = new JMFileWriter();
+        writer.writeToFile("C:/Users/diego/Programacion 3/project1", fileName, jsonArray);
+
     }
 
     public UptcList<Person> readPeopleFromJson(String fileName) {
@@ -47,22 +46,23 @@ public class JSONController {
 
         try {
             String jsonString = new String(Files.readAllBytes(Paths.get(fileName)));
-            JSONArray jsonArray = new JSONArray(jsonString);
+            JMFileReader reader = new JMFileReader();
+            JMArray<JMObject> jsonArray = reader.getJMArrayfromString(jsonString);
 
             for (int i = 0; i < jsonArray.length(); i++) {
-                JSONObject jsonObject = jsonArray.getJSONObject(i);                
-                
-                String docType = jsonObject.getString("docType");
-                String docNum = jsonObject.getString("docNum");
-                String name = jsonObject.getString("name");
-                String lastName = jsonObject.getString("lastName");
-                String gender = jsonObject.getString("gender");         
-                LocalDate birthDate = LocalDate.parse(jsonObject.getString("birthDate"));
-                JSONObject jsonCity = jsonObject.getJSONObject("city"); 
-                City city = new City(jsonCity.getString("cityName"),jsonCity.getString("daneCode"));
-                
+                JMObject JMObject = (JMObject) jsonArray.get(i);
+
+                String docType = (String) JMObject.get("docType");
+                String docNum = (String) JMObject.get("docNum");
+                String name = (String) JMObject.get("name");
+                String lastName = (String) JMObject.get("lastName");
+                String gender = (String) JMObject.get("gender");
+                LocalDate birthDate = LocalDate.parse((String) JMObject.get("birthDate"));
+                JMObject jsonCity = (JMObject) JMObject.getInnerJMObject("city");
+                City city = new City((String) jsonCity.get("daneCode"), (String) jsonCity.get("cityName"));
+
                 people.add(new Person(docType, docNum, name, lastName, gender, birthDate, city));
-                
+
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -72,34 +72,34 @@ public class JSONController {
     }
 
     public void writeCitiesToJson(UptcList<City> cities, String fileName) {
-        JSONArray jsonArray = new JSONArray();
+        JMArray<JMObject> jsonArray = new JMArray<>();
 
         for (City city : cities) {
-            JSONObject jsonCity = new JSONObject();
+            JMObject jsonCity = new JMObject();
 
-            jsonCity.put("daneCode", city.getDaneCode());            
+            jsonCity.put("daneCode", city.getDaneCode());
             jsonCity.put("cityName", city.getCityName());
-                   
-            jsonArray.put(jsonCity);
-        }
 
-        try {
-            Files.write(Paths.get(fileName), jsonArray.toString().getBytes());
-        } catch (IOException e) {
-            e.printStackTrace();
+            jsonArray.add(jsonCity);
         }
+        JMFileWriter writer = new JMFileWriter();
+        writer.writeToFile("C:/Users/diego/Programacion 3/project1", fileName, jsonArray);
+
     }
 
     public UptcList<City> readCitiesFromJson(String fileName) {
         UptcList<City> cities = new UptcList<>();
-
+        
         try {
             String jsonString = new String(Files.readAllBytes(Paths.get(fileName)));
-            JSONArray jsonArray = new JSONArray(jsonString);
+            JMFileReader reader = new JMFileReader();
+            JMArray<JMObject> jsonArray = reader.getJMArrayfromString(jsonString);
 
             for (int i = 0; i < jsonArray.length(); i++) {
-                JSONObject jsonObject = jsonArray.getJSONObject(i);                            
-                City city = new City(jsonObject.getString("cityName"),jsonObject.getString("daneCode"));                
+                JMObject JMObject = (JMObject) jsonArray.get(i);
+                String cityName = (String) JMObject.get("cityName");
+                String daneCode = (String) JMObject.get("daneCode");
+                City city = new City(daneCode, cityName);
                 cities.add(city);
             }
         } catch (IOException e) {

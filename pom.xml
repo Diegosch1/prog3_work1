@@ -47,6 +47,13 @@
 			<systemPath>${basedir}/lib/springboot-first-steps.jar</systemPath>		    		
 		</dependency>
 		<dependency>
+			<groupId>co.edu.uptc</groupId>
+			<artifactId>jsonmanagement</artifactId>
+			<version>1</version>
+			<scope>system</scope>
+			<systemPath>${basedir}/lib/jsonmanagement.jar</systemPath>		    		
+		</dependency>
+		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>
 			<optional>true</optional>

@@ -2,6 +2,8 @@ package diegoschi.project1.model;
 
 import java.time.LocalDate;
 
+import diegoschi.project1.exceptions.ProjectExeption;
+import diegoschi.project1.exceptions.TypeMessage;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,8 +22,7 @@ public class Person {
     private LocalDate birthDate;
     private City city;
 
-    public static boolean validPerson(Person person) {
-        boolean valid = true;
+    public static void validPerson(Person person) throws ProjectExeption {
         if (person.getName() == null ||
                 person.getLastName() == null ||
                 person.getGender() == null ||
@@ -31,8 +32,7 @@ public class Person {
                 person.getCity() == null ||
                 person.getCity().getCityName() == null || 
                 person.getCity().getDaneCode() == null) {
-            valid = false;
+            throw new ProjectExeption(TypeMessage.INFORMATION_INCOMPLETE);
         }
-        return valid;
     }
 }

@@ -5,12 +5,14 @@ import java.util.List;
 
 import co.edu.uptc.ejercicio1.models.UptcList;
 import diegoschi.project1.controller.JSONController;
+import diegoschi.project1.exceptions.ProjectExeption;
+import diegoschi.project1.exceptions.TypeMessage;
 import diegoschi.project1.model.Person;
 import diegoschi.project1.utils.DateUtil;
 
 public class PersonService {
   JSONController json = new JSONController();
-  private UptcList<Person> people = json.readPeopleFromJson("peopleJSON");
+  private UptcList<Person> people = json.readPeopleFromJson("peopleJSON.json");
 
   public PersonService() {
     loadPeople();
@@ -44,10 +46,8 @@ public class PersonService {
   }
 
   public void deletePerson(Person person) {
-    
       people.remove(person);
-      json.writePeopleToJson(people, "peopleJSON");
-    
+      json.writePeopleToJson(people, "peopleJSON");    
   }
 
   public void updateJSON(){
@@ -94,14 +94,13 @@ public class PersonService {
     return peopleAux;
   }
 
-  public Person getPersonByDocNum(String docNum) {
-    Person personAux = null;
+  public Person getPersonByDocNum(String docNum) throws ProjectExeption {    
     for (Person person : people) {
       if (person.getDocNum().equals(docNum)) {
-        personAux = person;
+        return person;
       }
     }
-    return personAux;
+    throw new ProjectExeption(TypeMessage.NOT_FOUND);
   }
 
 }

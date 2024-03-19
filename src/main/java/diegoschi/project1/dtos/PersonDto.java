@@ -4,6 +4,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import diegoschi.project1.exceptions.ProjectExeption;
+import diegoschi.project1.exceptions.TypeMessage;
 import diegoschi.project1.model.Person;
 import diegoschi.project1.utils.DateUtil;
 import lombok.Getter;
@@ -47,15 +49,13 @@ public class PersonDto {
         return person;
     }
 
-    public static boolean validaPerson(PersonDto personDto) {
-        boolean valid = true; 
+    public static void validaPerson(PersonDto personDto) throws ProjectExeption {
         if (personDto.getName() == null || 
         personDto.getLastName() == null || 
         personDto.getGender() == null || 
         personDto.getBirthDate() == null) {
-            valid =false;
+            throw new ProjectExeption(TypeMessage.INFORMATION_INCOMPLETE);
         }
-        return  valid;
     }
 
 

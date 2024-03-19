@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import diegoschi.project1.dtos.Person2Dto;
 import diegoschi.project1.dtos.PersonDto;
+import diegoschi.project1.exceptions.ProjectExeption;
 import diegoschi.project1.model.Person;
 import diegoschi.project1.services.PersonService;
 
@@ -69,38 +70,37 @@ public class PersonController {
     }
 
     @PostMapping("/addPerson")
-    public ResponseEntity<?> addNormalPerson(@RequestBody Person person) {
-        if (Person.validPerson(person)) {
+    public ResponseEntity<Object> addNormalPerson(@RequestBody Person person) {
+        try {
+            Person.validPerson(person);
             personService.addPerson(person);
-            System.out.println(person.getName() + " was added successfully");
-            return ResponseEntity.status(HttpStatus.CREATED).build();
-        } else {
-            System.out.println("Bad Request");
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+            personService.updateJSON();
+            return ResponseEntity.status(HttpStatus.OK).body(person);
+        } catch (ProjectExeption e) {
+            return ResponseEntity.status(e.getMenssage().getCodeHttp()).body(e.getMenssage());
+
         }
     }
 
     @DeleteMapping("/deletePerson/{docNum}")
-    public ResponseEntity<?> deleteNormalPerson(@PathVariable String docNum) {
-        if (!docNum.equals(null)) {
+    public ResponseEntity<Object> deleteNormalPerson(@PathVariable String docNum) {
+        try {
             Person targetPerson = personService.getPersonByDocNum(docNum);
             personService.deletePerson(targetPerson);
+            personService.updateJSON();
             System.out.println(targetPerson.getName() + " was deleted successfully");
-            return ResponseEntity.status(HttpStatus.CREATED).build();
-        } else {
-            System.out.println("Bad Request");
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+
+            return ResponseEntity.status(HttpStatus.OK).body(targetPerson);
+        } catch (ProjectExeption e) {
+            return ResponseEntity.status(e.getMenssage().getCodeHttp()).body(e.getMenssage());
         }
     }
 
     @PutMapping("/editPerson/{docNum}")
-public ResponseEntity<?> editNormalPerson(@PathVariable String docNum, @RequestBody Person updatedPerson) {
-    if (updatedPerson != null) {
-        
-        Person targetPerson = personService.getPersonByDocNum(docNum);
+    public ResponseEntity<Object> editNormalPerson(@PathVariable String docNum, @RequestBody Person updatedPerson) {
+        try {
+            Person targetPerson = personService.getPersonByDocNum(docNum);
 
-        if (targetPerson != null) {
-            
             targetPerson.setLastName(updatedPerson.getLastName());
             targetPerson.setGender(updatedPerson.getGender());
             targetPerson.setCity(updatedPerson.getCity());
@@ -110,29 +110,9 @@ public ResponseEntity<?> editNormalPerson(@PathVariable String docNum, @RequestB
 
             personService.updateJSON();
 
-            System.out.println(targetPerson.getName() + " was edited successfully");
-            return ResponseEntity.status(HttpStatus.OK).build();
-        } else {
-            System.out.println("Person with document number " + docNum + " not found");
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
-    } else {
-        System.out.println("Bad Request");
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-    }
-}
-
-
-    @PostMapping("/addPersonDto")
-    public ResponseEntity<?> addPersonDto(@RequestBody PersonDto personDto) {
-        if (PersonDto.validaPerson(personDto)) {
-            personService.addPerson(PersonDto.fromPersonDto(personDto));
-            System.out.println(personDto.getName() + " was added successfully");
-            return ResponseEntity.status(HttpStatus.CREATED).build();
-        } else {
-            System.out.println("Bad Request");
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+            return ResponseEntity.status(HttpStatus.OK).body(targetPerson);
+        } catch (ProjectExeption e) {
+            return ResponseEntity.status(e.getMenssage().getCodeHttp()).body(e.getMenssage());
         }
     }
-
 }
