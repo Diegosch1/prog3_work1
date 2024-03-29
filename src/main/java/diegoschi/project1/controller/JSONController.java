@@ -16,7 +16,7 @@ import java.time.LocalDate;
 public class JSONController {
     public void writePeopleToJson(UptcList<Person> people, String fileName) {
         JMArray<JMObject> jsonArray = new JMArray<>();
-
+        
         for (Person person : people) {
             JMObject jsonPerson = new JMObject();
             JMObject jsonCity = new JMObject();
@@ -37,15 +37,22 @@ public class JSONController {
         }
 
         JMFileWriter writer = new JMFileWriter();
-        writer.writeToFile("C:/Users/diego/Programacion 3/project1", fileName, jsonArray);
+        //dirección del directorio principal
+        String projectDirectory = System.getProperty("user.dir");
+        String filePath = projectDirectory + "/src/main/java/diegoschi/project1/data";
 
+            
+        writer.writeToFile(filePath, fileName.substring(0,fileName.length()-5), jsonArray);
     }
 
     public UptcList<Person> readPeopleFromJson(String fileName) {
         UptcList<Person> people = new UptcList<>();
 
         try {
-            String jsonString = new String(Files.readAllBytes(Paths.get(fileName)));
+            String projectDirectory = System.getProperty("user.dir");
+            String filePath = projectDirectory + "/src/main/java/diegoschi/project1/data/" + fileName;
+
+            String jsonString = new String(Files.readAllBytes(Paths.get(filePath)));
             JMFileReader reader = new JMFileReader();
             JMArray<JMObject> jsonArray = reader.getJMArrayfromString(jsonString);
 
@@ -73,25 +80,35 @@ public class JSONController {
 
     public void writeCitiesToJson(UptcList<City> cities, String fileName) {
         JMArray<JMObject> jsonArray = new JMArray<>();
-
+    
         for (City city : cities) {
             JMObject jsonCity = new JMObject();
-
+    
             jsonCity.put("daneCode", city.getDaneCode());
             jsonCity.put("cityName", city.getCityName());
-
+    
             jsonArray.add(jsonCity);
         }
+        
         JMFileWriter writer = new JMFileWriter();
-        writer.writeToFile("C:/Users/diego/Programacion 3/project1", fileName, jsonArray);
+        
+        //dirección del directorio principal
+        String projectDirectory = System.getProperty("user.dir");
+        String filePath = projectDirectory + "/src/main/java/diegoschi/project1/data";
 
+            
+        writer.writeToFile(filePath, fileName.substring(0,fileName.length()-5), jsonArray);
     }
+    
 
     public UptcList<City> readCitiesFromJson(String fileName) {
         UptcList<City> cities = new UptcList<>();
         
         try {
-            String jsonString = new String(Files.readAllBytes(Paths.get(fileName)));
+            String projectDirectory = System.getProperty("user.dir");
+            String filePath = projectDirectory + "/src/main/java/diegoschi/project1/data/" + fileName;
+
+            String jsonString = new String(Files.readAllBytes(Paths.get(filePath)));
             JMFileReader reader = new JMFileReader();
             JMArray<JMObject> jsonArray = reader.getJMArrayfromString(jsonString);
 

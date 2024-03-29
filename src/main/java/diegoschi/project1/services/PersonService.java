@@ -3,6 +3,10 @@ package diegoschi.project1.services;
 import java.util.Collections;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
+
 import co.edu.uptc.ejercicio1.models.UptcList;
 import diegoschi.project1.controller.JSONController;
 import diegoschi.project1.exceptions.ProjectExeption;
@@ -10,11 +14,19 @@ import diegoschi.project1.exceptions.TypeMessage;
 import diegoschi.project1.model.Person;
 import diegoschi.project1.utils.DateUtil;
 
+@Service
 public class PersonService {
-  JSONController json = new JSONController();
-  private UptcList<Person> people = json.readPeopleFromJson("peopleJSON.json");
 
-  public PersonService() {
+  JSONController json;
+  private UptcList<Person> people;
+  String peopleConst;
+
+  @Autowired
+  public PersonService(@Value("${main_peopleJSON}") String main_peopleJSON) {
+    this.json = new JSONController();
+    this.people = json.readPeopleFromJson(main_peopleJSON);
+    this.peopleConst = main_peopleJSON;
+    setPeopleConst(main_peopleJSON);
     loadPeople();
   }
 
@@ -42,21 +54,21 @@ public class PersonService {
 
   public void addPerson(Person person) {
     people.add(person);
-    json.writePeopleToJson(people, "peopleJSON");
+    updateJSON();
   }
 
   public void deletePerson(Person person) {
       people.remove(person);
-      json.writePeopleToJson(people, "peopleJSON");    
+      updateJSON();
   }
 
   public void updateJSON(){
-    json.writePeopleToJson(people, "peopleJSON");
+    json.writePeopleToJson(people, getPeopleConst());
   }
 
   public void editPerson(int index, Person person) {    
       people.set(index, person);
-      json.writePeopleToJson(people, "peopleJSON");    
+      updateJSON();
   }
 
   public List<Person> orderAge(List<Person> peopleAux) {
@@ -103,4 +115,14 @@ public class PersonService {
     throw new ProjectExeption(TypeMessage.NOT_FOUND);
   }
 
+  public String getPeopleConst() {
+    return peopleConst;
+  }
+
+  public void setPeopleConst(String peopleConst) {
+    this.peopleConst = peopleConst;
+  }
+
+
+  
 }

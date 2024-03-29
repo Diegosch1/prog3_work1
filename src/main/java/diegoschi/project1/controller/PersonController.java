@@ -2,6 +2,7 @@ package diegoschi.project1.controller;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -22,7 +23,9 @@ import diegoschi.project1.services.PersonService;
 @RestController
 @RequestMapping("/person")
 public class PersonController {
-    PersonService personService = new PersonService();
+
+    @Autowired
+    PersonService personService;
 
     @GetMapping()
     public List<Person> getPeople() {

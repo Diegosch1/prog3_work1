@@ -2,6 +2,7 @@ package diegoschi.project1.controller;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -17,11 +18,15 @@ import diegoschi.project1.model.City;
 import diegoschi.project1.services.CityService;
 import diegoschi.project1.services.PersonService;
 
+
 @RestController
 @RequestMapping("/city")
 public class CityController {
-    PersonService personService = new PersonService();
-    CityService cityService = new CityService();
+    @Autowired
+    PersonService personService;
+    @Autowired
+    CityService cityService;
+
 
     @GetMapping()
     public List<City> getCities() {
