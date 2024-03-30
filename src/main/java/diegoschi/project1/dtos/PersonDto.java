@@ -1,9 +1,8 @@
 package diegoschi.project1.dtos;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
+import co.edu.uptc.ejercicio1.models.UptcList;
 import diegoschi.project1.exceptions.ProjectExeption;
 import diegoschi.project1.exceptions.TypeMessage;
 import diegoschi.project1.model.Person;
@@ -32,8 +31,8 @@ public class PersonDto {
     }
 
 
-    public static List<PersonDto> fromPeople(List <Person> people) {
-        List <PersonDto> personDto = new ArrayList<PersonDto>();
+    public static UptcList<PersonDto> fromPeople(UptcList <Person> people) {
+        UptcList <PersonDto> personDto = new UptcList<>();
         for (Person person : people) {
             personDto.add(PersonDto.fromPerson(person));
         }

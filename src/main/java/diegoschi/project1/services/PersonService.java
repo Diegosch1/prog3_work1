@@ -1,7 +1,6 @@
 package diegoschi.project1.services;
 
 import java.util.Collections;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -30,24 +29,24 @@ public class PersonService {
     loadPeople();
   }
 
-  public List<Person> loadPeople() {
+  public UptcList<Person> loadPeople() {
     return people;
   }
 
-  public List<Person> orderName(List<Person> peopleAux) {
+  public UptcList<Person> orderName(UptcList<Person> peopleAux) {
     Collections.sort(peopleAux, ComparatorService.personNameComparator());
     return peopleAux;
   }
 
-  public List<Person> getPeople() {
-    List<Person> peopleAux = new UptcList<Person>();
+  public UptcList<Person> getPeople() {
+    UptcList<Person> peopleAux = new UptcList<>();
     for (Person person : this.people) {
       peopleAux.add(person);
     }
     return peopleAux;
   }
 
-  public List<Person> orderLastName(List<Person> peopleAux) {
+  public UptcList<Person> orderLastName(UptcList<Person> peopleAux) {
     Collections.sort(peopleAux, ComparatorService.personLastNameComparator());
     return peopleAux;
   }
@@ -71,13 +70,13 @@ public class PersonService {
       updateJSON();
   }
 
-  public List<Person> orderAge(List<Person> peopleAux) {
+  public UptcList<Person> orderAge(UptcList<Person> peopleAux) {
     Collections.sort(peopleAux, ComparatorService.personAgeComparator());
     return peopleAux;
   }
 
-  public List<Person> getOver18() {
-    List<Person> peopleAux = new UptcList<Person>();
+  public UptcList<Person> getOver18() {
+    UptcList<Person> peopleAux = new UptcList<>();
     for (Person person : people) {
       if (DateUtil.getAge(person.getBirthDate()) >= 18) {
         peopleAux.add(person);
@@ -86,8 +85,8 @@ public class PersonService {
     return peopleAux;
   }
 
-  public List<Person> getPersonGender(String gender) {
-    List<Person> peopleAux = new UptcList<Person>();
+  public UptcList<Person> getPersonGender(String gender) {
+    UptcList<Person> peopleAux = new UptcList<>();
     for (Person person : people) {
       if (person.getGender().equals(gender)) {
         peopleAux.add(person);
@@ -96,8 +95,8 @@ public class PersonService {
     return peopleAux;
   }
 
-  public List<Person> getPeopleName(String name) {
-    List<Person> peopleAux = new UptcList<Person>();
+  public UptcList<Person> getPeopleName(String name) {
+    UptcList<Person> peopleAux = new UptcList<>();
     for (Person person : people) {
       if (person.getName().equals(name)) {
         peopleAux.add(person);

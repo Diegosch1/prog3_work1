@@ -1,10 +1,6 @@
 package diegoschi.project1.dtos;
 
-import java.util.ArrayList;
-import java.util.List;
-
-
-
+import co.edu.uptc.ejercicio1.models.UptcList;
 import diegoschi.project1.model.Person;
 import diegoschi.project1.utils.DateUtil;
 import lombok.Getter;
@@ -27,8 +23,8 @@ public class Person2Dto {
     }
 
 
-    public static List<Person2Dto> fromPeople(List <Person> people) {
-        List <Person2Dto> personDto = new ArrayList<Person2Dto>();
+    public static UptcList<Person2Dto> fromPeople(UptcList <Person> people) {
+        UptcList <Person2Dto> personDto = new UptcList<>();
         for (Person person : people) {
             personDto.add(Person2Dto.fromPerson(person));
         }

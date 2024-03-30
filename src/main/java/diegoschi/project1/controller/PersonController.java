@@ -1,7 +1,5 @@
 package diegoschi.project1.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import co.edu.uptc.ejercicio1.models.UptcList;
 import diegoschi.project1.dtos.Person2Dto;
 import diegoschi.project1.dtos.PersonDto;
 import diegoschi.project1.exceptions.ProjectExeption;
@@ -28,47 +27,47 @@ public class PersonController {
     PersonService personService;
 
     @GetMapping()
-    public List<Person> getPeople() {
-        List<Person> peopleAux = personService.getPeople();
+    public UptcList<Person> getPeople() {
+        UptcList<Person> peopleAux = personService.getPeople();
         return peopleAux;
     }
 
     @GetMapping("/all2")
-    public List<Person2Dto> getPeople2() {
-        List<Person> peopleAux = personService.getPeople();
+    public UptcList<Person2Dto> getPeople2() {
+        UptcList<Person> peopleAux = personService.getPeople();
         return Person2Dto.fromPeople(peopleAux);
     }
 
     @GetMapping("/orderName")
-    public List<PersonDto> getPeopleOrderName() {
-        List<Person> peopleAux = personService.getPeople();
+    public UptcList<PersonDto> getPeopleOrderName() {
+        UptcList<Person> peopleAux = personService.getPeople();
         return PersonDto.fromPeople(personService.orderName(peopleAux));
     }
 
     @GetMapping("/orderLastName")
-    public List<PersonDto> getPeopleOrderLastName() {
-        List<Person> peopleAux = personService.getPeople();
+    public UptcList<PersonDto> getPeopleOrderLastName() {
+        UptcList<Person> peopleAux = personService.getPeople();
         return PersonDto.fromPeople(personService.orderLastName(peopleAux));
     }
 
     @GetMapping("/orderAge")
-    public List<PersonDto> getPeopleOrderAge() {
-        List<Person> peopleAux = personService.getPeople();
+    public UptcList<PersonDto> getPeopleOrderAge() {
+        UptcList<Person> peopleAux = personService.getPeople();
         return PersonDto.fromPeople(personService.orderAge(peopleAux));
     }
 
     @GetMapping("/over18")
-    public List<PersonDto> getPeopleOver18() {
+    public UptcList<PersonDto> getPeopleOver18() {
         return PersonDto.fromPeople(personService.getOver18());
     }
 
     @GetMapping("/findByGender/{gender}")
-    public List<PersonDto> getPersonGender(@PathVariable String gender) {
+    public UptcList<PersonDto> getPersonGender(@PathVariable String gender) {
         return PersonDto.fromPeople(personService.getPersonGender(gender));
     }
 
     @GetMapping("/findByName/{name}")
-    public List<PersonDto> getPeopleName(@PathVariable String name) {
+    public UptcList<PersonDto> getPeopleName(@PathVariable String name) {
         return PersonDto.fromPeople(personService.getPeopleName(name));
     }
 

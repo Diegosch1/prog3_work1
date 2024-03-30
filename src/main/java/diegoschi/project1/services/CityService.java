@@ -1,7 +1,5 @@
 package diegoschi.project1.services;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -38,8 +36,8 @@ public CityService(@Value("${main_citiesJSON}") String main_citiesJSON,
         return cities;
     }
 
-    public List<City> getCityList() {
-        List<City> citiesAux = new UptcList<City>();
+    public UptcList<City> getCityList() {
+        UptcList<City> citiesAux = new UptcList<>();
         for (City city : cities) {
             citiesAux.add(city);
         }
@@ -47,7 +45,7 @@ public CityService(@Value("${main_citiesJSON}") String main_citiesJSON,
     }
 
     public City getCityByDaneCode(String code) throws ProjectExeption{
-        List<City> cities = getCityList();
+        UptcList<City> cities = getCityList();
         for (City city : cities) {
             if (city.getDaneCode().equals(code)) {
                 return city;
@@ -61,7 +59,7 @@ public CityService(@Value("${main_citiesJSON}") String main_citiesJSON,
     }
 
     public boolean cityHasPersons(City city) {
-        List<Person> people = pService.getPeople();
+        UptcList<Person> people = pService.getPeople();
         for (Person person : people) {
             if (isSameCity(city, person.getCity())) {
                 return true;

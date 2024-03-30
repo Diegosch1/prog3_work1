@@ -1,7 +1,5 @@
 package diegoschi.project1.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import co.edu.uptc.ejercicio1.models.UptcList;
 import diegoschi.project1.exceptions.ProjectExeption;
 import diegoschi.project1.model.City;
 import diegoschi.project1.services.CityService;
@@ -29,8 +28,8 @@ public class CityController {
 
 
     @GetMapping()
-    public List<City> getCities() {
-        List<City> citiesAux = cityService.getCityList();
+    public UptcList<City> getCities() {
+        UptcList<City> citiesAux = cityService.getCityList();
         return citiesAux;
     }
 
